@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JS EGİTİMİ</title>
+</head>
+
+<style>
+    body{
+        background-color: darkolivegreen;
+        
+    }
+    #game{
+        width:400px;
+        background-color: rgb(47, 46, 38);
+        padding: 10px;
+        margin: auto;
+        text-align: center;/**divi ortaya aldik*/
+    }
+    h1{
+        border: 1px solid white;
+        margin: 15px;
+        padding: 5px;
+        color:white;
+        font-size: 20px;
+        font-family:Georgia, 'Times New Roman', Times, serif;
+    }
+    span{
+        font-size: 125%;
+        padding: 12px;
+        color: white;
+    }
+    #result{
+        width: 90px;
+    }
+    #answer{
+        border: none;
+        margin-top: 10px;
+        padding: 5px;
+        width: 100px;
+        background-color:rgba(255, 0, 255, 0.366) ;
+        color: white;
+    }
+    #answer:hover{
+        background-color: mediumpurple;
+    }
+    #True,#Flase{
+        font-size: 150%;
+        margin-top: 10px;
+        padding: 10px;
+        display: inline-block;
+    }
+    #True{
+        background-color: rgb(18, 104, 18);
+    }
+    #False{
+        background-color: rgb(175, 11, 11);
+    }
+</style>
+
+<body>
+    <div id="game">
+        <h1>Dört İşlem Oyunu</h1>
+        <span id="number1">0</span>
+        <span id="operator">*</span>
+        <span id="number2">0</span>
+        <span>=</span>
+        <input type="text" id="result">
+        <button id="answer">Cevapla</button>
+        <div style="clear: both;"></div>
+         bununla bir satir aşaği aldik.
+        <span id="True">0</span>
+        <span id="False">0</span>
+        <div style="clear: both;"></div>
+    </div>
+
+<script>
+    var Number1,Number2,operator,result,answer,True=0,False=0;
+    Number1=document.getElementById('number1');
+    Number2=document.getElementById('number2');
+    operator=document.getElementById('operator');
+    result=document.getElementById('result');
+    answer=document.getElementById('answer');
+    True=document.getElementById('True');
+    False=document.getElementById('False');
+    /*random numaralara gelecek sayilar üretiyoruz*/
+    function randomNumber(min,max){
+        var number=Math.floor(Math.random()*(max-min))+min;
+        return number;
+    }
+    /*oyun baslangicinda veya soru tahmini sonrasi yeni soru oluşturma fonksiyonu*/
+    function newQuestion(){
+        var operation=["+","-","*","/"];
+        operator.textContent=operation[randomNumber(0,4)];//operator seçimi text content ile içerige erişiyoruz
+        Number1.textContent=randomNumber(0,50);
+        Number2.textContent=randomNumber(0,50);
+        //kalansiz bölme yapilmasi için bu olmalı yoksa 35/34 gelirse ne olacak.
+        if(operator.textContent=="/"){
+            while(ture){
+                 Number2.textContent=randomNumber(0,50);
+                if(Number1.textContent%Number2.textContent==0){
+                    break;
+                }
+            }
+        }
+    }
+    //ekran yüklendiğinde yeni elemanlarin gelmesini istedik ekran gelir gelmez bu fonksiyonun çalışmasını istedik.
+    window.onload=function(){
+        newQuestion();
+    }
+    answer.onclick=function(){
+        var n1,n2,ans;
+        n1=Number(Number1.textContent);
+        n2=Number(Number2.textContent);
+        switch(operator.textContent){
+            case '+' :ans=n1+n2;break;
+            case '-' :ans=n1-n2;break;
+            case '*' :ans=n1*n2;break;
+            case '/' :ans=n1/n2;break;
+            default :break;
+        }
+        if(ans==result.value){
+            True.textContent=Number(True.textContent)+1;
+        }
+        else{
+            False.textContent=Number(False.textContent)+1;
+
+        }
+        newQuestion();
+    }
+
+
+</script>
+
